@@ -96,7 +96,7 @@
                     {
                         if ($pscmdlet.ShouldProcess($Virtualserver.Name, "Remove iRule $Name from VirtualServer"))
                         {
-                            $Null = $Virtualserver | Remove-iRuleFromVirtualServer -iRuleName $Name
+                            $Null = $Virtualserver | Remove-iRuleFromVirtualServer -iRuleName $Name -Partition $Partition
                         }
                     }
                     
@@ -125,7 +125,9 @@
             {
                 if ($pscmdlet.ShouldProcess($Virtualserver.Name, "Add iRule $Name"))
                 {
-                    $Null = Get-VirtualServer -name $Virtualserver.Name | Add-iRuleToVirtualServer -iRuleName $Name
+                    $name = $($Virtualserver.Name)
+                    Write-Verbose -Message "Adding iRule $iRuleFullName to Virtual Server $name"
+                    $Null = Get-VirtualServer -name $name  -Partition $Partition | Add-iRuleToVirtualServer -iRuleName $iRuleFullName -Partition $Partition
                 }
             }
         }
